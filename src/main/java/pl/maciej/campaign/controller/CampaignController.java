@@ -1,10 +1,14 @@
-package pl.maciej.product;
+package pl.maciej.campaign.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import pl.maciej.campaign.entity.Campaign;
+import pl.maciej.campaign.dto.CampaignDto;
+import pl.maciej.campaign.service.CampaignService;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("campaign")
 @RequiredArgsConstructor

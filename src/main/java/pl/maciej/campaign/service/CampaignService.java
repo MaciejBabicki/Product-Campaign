@@ -1,7 +1,12 @@
-package pl.maciej.product;
+package pl.maciej.campaign.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.maciej.campaign.dto.CampaignDto;
+import pl.maciej.campaign.entity.Campaign;
+import pl.maciej.campaign.exception.ResourceNotFoundException;
+import pl.maciej.campaign.mapper.CampaignMapper;
+import pl.maciej.campaign.repository.CampaignRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +38,7 @@ public class CampaignService {
         campaign.setKeyword(updatedCampaign.getKeyword());
         campaign.setPrice(updatedCampaign.getPrice());
         campaign.setFund(updatedCampaign.getFund());
-        campaign.setOpen(updatedCampaign.isOpen());
+        campaign.setStatus(updatedCampaign.isStatus());
         campaign.setCity(updatedCampaign.getCity());
         campaign.setRadius(updatedCampaign.getRadius());
         repository.save(campaign);
