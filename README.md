@@ -36,7 +36,6 @@ Once the database is set up and the project is built, you can run the applicatio
 ```
 mvn spring-boot:run
 ```
-This will start the Spring Boot application.
 
 **Access the Application**
 
