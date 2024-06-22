@@ -4,6 +4,7 @@ Backend of web application about campanies of the products. It serves CRUD opera
 ## Technologies:
 
 **Backend:** Java, SpringBoot, Hibernate
+
 **Databese:** H2
 
 ## System Requirements:
