@@ -1,5 +1,5 @@
 ## General Info
-Backend of web application about campanies of the products. It serves CRUD operations with data validations. There is implemented the RESR API to deploy the frontend.  
+Backend of web application about campanies of the products. It serves CRUD operations with data validations. There is implemented the REST API to deploy the frontend.  
 
 ## Technologies:
 
