@@ -28,7 +28,7 @@ mvn clean install
 This command will download all required dependencies and build the project.
 
 **Set Up the Database**
-Open the localhost:8080/h2-console and find the URL in logs after running java programm.
+Open the http://localhost:8080/h2-console and find the URL in logs after running java programm.
 
 **Run the Application**
 
