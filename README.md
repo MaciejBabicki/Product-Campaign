@@ -39,7 +39,7 @@ This will start the Spring Boot application.
 
 **Access the Application**
 
-Once the application is running, you can access it at http://localhost:8080 in your web browser.
+Once the application is running, you can access it at http://localhost:8080/campains in your web browser.
 
 **Unit Tests**
 
