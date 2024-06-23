@@ -16,8 +16,7 @@ public class CampaignController {
     private final CampaignService service;
 
     @PostMapping
-    public CampaignDto createCampaign(){
-        Campaign campaign = new Campaign();
+    public CampaignDto createCampaign(@RequestBody Campaign campaign){
         return service.createCampaign(campaign);
     }
 
