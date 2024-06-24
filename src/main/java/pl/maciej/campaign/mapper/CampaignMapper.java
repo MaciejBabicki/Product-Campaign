@@ -1,10 +1,8 @@
 package pl.maciej.campaign.mapper;
 
-import org.springframework.stereotype.Component;
-import pl.maciej.campaign.entity.Campaign;
 import pl.maciej.campaign.dto.CampaignDto;
+import pl.maciej.campaign.entity.Campaign;
 
-@Component
 public class CampaignMapper {
     public static CampaignDto mapToCampaignDto(Campaign campaign) {
         return new CampaignDto(
