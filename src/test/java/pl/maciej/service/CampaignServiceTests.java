@@ -20,10 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class ServiceTest {
+public class CampaignServiceTests {
     Campaign campaign = new Campaign();
     long existingId = 1;
-    long notExistingId = 2;
     @Mock
     private CampaignRepository repository;
     @InjectMocks
@@ -37,7 +36,6 @@ public class ServiceTest {
     @Test
     public void test_CreateCampaign_CampaignCreated() {
         //given
-        CampaignDto campaignDto = CampaignMapper.mapToCampaignDto(campaign);
         when(repository.save(any(Campaign.class))).thenReturn(campaign);
         //when
         CampaignDto newCampaignDto = campaignService.createCampaign(campaign);
