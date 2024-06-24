@@ -9,7 +9,6 @@ import pl.maciej.campaign.mapper.CampaignMapper;
 import pl.maciej.campaign.repository.CampaignRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ public class CampaignService {
 
     public List<CampaignDto> getCampaigns() {
         List<Campaign> campaigns = repository.findAll();
-        return campaigns.stream().map(CampaignMapper::mapToCampaignDto).collect(Collectors.toList());
+        return campaigns.stream().map(CampaignMapper::mapToCampaignDto).toList();
     }
 
     public CampaignDto getCampaign(long id) {
@@ -34,13 +33,6 @@ public class CampaignService {
 
     public CampaignDto updateCampaign(long id, CampaignDto updatedCampaign) {
         Campaign campaign = repository.findById(id).orElseThrow(ResourceNotFoundException::new);
-        campaign.setName(updatedCampaign.getName());
-        campaign.setKeyword(updatedCampaign.getKeyword());
-        campaign.setPrice(updatedCampaign.getPrice());
-        campaign.setFund(updatedCampaign.getFund());
-        campaign.setStatus(updatedCampaign.isStatus());
-        campaign.setCity(updatedCampaign.getCity());
-        campaign.setRadius(updatedCampaign.getRadius());
         repository.save(campaign);
         return CampaignMapper.mapToCampaignDto(campaign);
     }
