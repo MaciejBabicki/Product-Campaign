@@ -101,7 +101,7 @@ public class CampaignControllerIntegrationTests {
     @Test
     void shouldDeleteCampaign() throws Exception {
         mockMvc.perform(delete("/campaigns/1")
-                        .contentType("application/json"))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 }
