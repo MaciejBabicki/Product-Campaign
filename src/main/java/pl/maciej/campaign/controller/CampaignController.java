@@ -10,7 +10,7 @@ import pl.maciej.campaign.service.CampaignService;
 import java.util.Arrays;
 import java.util.List;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5000")
 @RestController
 @RequestMapping("campaigns")
 @RequiredArgsConstructor
