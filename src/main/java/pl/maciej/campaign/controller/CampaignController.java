@@ -7,6 +7,7 @@ import pl.maciej.campaign.dto.CampaignDto;
 import pl.maciej.campaign.entity.Campaign;
 import pl.maciej.campaign.service.CampaignService;
 
+import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -39,5 +40,10 @@ public class CampaignController {
     @DeleteMapping("/{id}")
     public void deleteCampaign(@PathVariable("id") long id) {
         service.deleteCampaign(id);
+    }
+
+    @GetMapping("/cities")
+    public List<String> getCities() {
+        return Arrays.asList("Żywiec", "Kraków", "Katowice");
     }
 }
