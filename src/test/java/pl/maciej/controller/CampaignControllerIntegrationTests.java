@@ -9,7 +9,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import pl.maciej.campaign.dto.CampaignDto;
 import pl.maciej.campaign.entity.Campaign;
 import pl.maciej.campaign.service.CampaignService;
@@ -19,13 +18,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -40,9 +36,8 @@ public class CampaignControllerIntegrationTests {
     Campaign campaign = new Campaign();
     CampaignDto campaignDto = new CampaignDto();
 
-
     @Test
-    void crateCampaign() throws Exception{
+    void crateCampaign() throws Exception {
         Campaign campaign = new Campaign();
         campaign.setName("test");
         campaign.setKeyword("test");
@@ -51,12 +46,12 @@ public class CampaignControllerIntegrationTests {
         campaign.setStatus(false);
         campaign.setCity("test");
         campaign.setRadius(3);
-
         mockMvc.perform(post("/campaigns")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(campaign)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(campaign)))
                 .andExpect(status().isOk());
     }
+
     @Test
     public void createCampaign_CreatedCampaign() throws Exception {
         //given
@@ -69,7 +64,6 @@ public class CampaignControllerIntegrationTests {
                         .contentType(objectMapper.writeValueAsString(campaignDto)))
                 .andExpect(status().isOk());
     }
-
 
     @Test
     public void test_GetCampaigns_ListReturned() throws Exception {
@@ -88,16 +82,11 @@ public class CampaignControllerIntegrationTests {
 
     @Test
     void test_getCampaignById_CampaignReturned() throws Exception {
-        //given
-        long campaignId = 1L;
-        CampaignDto campaignDto = new CampaignDto();
-        //when
-        when(campaignService.getCampaign(campaignId)).thenReturn(campaignDto);
-        //then
-        mockMvc.perform(get("/campaings/1", campaignId)
+        mockMvc.perform(get("/campaings/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+
     @Test
     void shouldDeleteCampaign() throws Exception {
         mockMvc.perform(delete("/campaigns/1")
