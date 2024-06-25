@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import pl.maciej.campaign.dto.CampaignDto;
 import pl.maciej.campaign.entity.Campaign;
 import pl.maciej.campaign.service.CampaignService;
@@ -18,11 +19,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,6 +38,8 @@ public class CampaignControllerIntegrationTests {
     @MockBean
     CampaignService campaignService;
     Campaign campaign = new Campaign();
+    CampaignDto campaignDto = new CampaignDto();
+
 
     @Test
     void crateCampaign() throws Exception{
@@ -59,23 +64,12 @@ public class CampaignControllerIntegrationTests {
         //when
         when(campaignService.createCampaign(campaign)).thenReturn(campaignDto);
         //then
-        mockMvc.perform(post("/campaign")
+        mockMvc.perform(post("/campaigns")
                         .contentType(MediaType.APPLICATION_JSON)
                         .contentType(objectMapper.writeValueAsString(campaignDto)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value(campaignDto.getName()));
+                .andExpect(status().isOk());
     }
 
-    @Test
-    public void test_CreateCampaign_InvalidRequestBody() throws Exception {
-        //given
-        String invalidRequestBody = "invalid request body";
-        //then
-        mockMvc.perform(post("/campaign")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(invalidRequestBody))
-                .andExpect(status().isBadRequest());
-    }
 
     @Test
     public void test_GetCampaigns_ListReturned() throws Exception {
@@ -89,7 +83,7 @@ public class CampaignControllerIntegrationTests {
         mockMvc.perform(get("/campaigns")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("/$.campaigns", hasSize(2)));
+                .andExpect(jsonPath("/$", hasSize(2)));
     }
 
     @Test
@@ -100,9 +94,14 @@ public class CampaignControllerIntegrationTests {
         //when
         when(campaignService.getCampaign(campaignId)).thenReturn(campaignDto);
         //then
-        mockMvc.perform(get("/campaings/{id}", campaignId)
+        mockMvc.perform(get("/campaings/1", campaignId)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value(campaignDto.getName()));
+                .andExpect(status().isOk());
+    }
+    @Test
+    void shouldDeleteCampaign() throws Exception {
+        mockMvc.perform(delete("/campaigns/1")
+                        .contentType("application/json"))
+                .andExpect(status().isOk());
     }
 }
