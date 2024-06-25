@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import pl.maciej.campaign.dto.CampaignDto;
 import pl.maciej.campaign.entity.Campaign;
-import pl.maciej.campaign.mapper.CampaignMapper;
 import pl.maciej.campaign.repository.CampaignRepository;
 import pl.maciej.campaign.service.CampaignService;
 
@@ -21,7 +20,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class CampaignServiceTests {
-    Campaign campaign = new Campaign();
+    Campaign campaign1 = new Campaign();
+    Campaign campaign2 = new Campaign();
     long existingId = 1;
     @Mock
     private CampaignRepository repository;
@@ -36,20 +36,19 @@ public class CampaignServiceTests {
     @Test
     public void test_CreateCampaign_CampaignCreated() {
         //given
-        when(repository.save(any(Campaign.class))).thenReturn(campaign);
+        when(repository.save(any(Campaign.class))).thenReturn(campaign1);
         //when
-        CampaignDto newCampaignDto = campaignService.createCampaign(campaign);
+        CampaignDto newCampaignDto = campaignService.createCampaign(campaign1);
         //then
         assertNotNull(newCampaignDto);
-        assertEquals(newCampaignDto.getId(), campaign.getId());
-        verify(repository, times(1)).save(campaign);
+        assertEquals(newCampaignDto.getId(), campaign1.getId());
+        verify(repository, times(1)).save(campaign1);
     }
 
     @Test
     void test_GetCampaigns_ListReturned() {
         //given
-        Campaign campaign2 = new Campaign();
-        List<Campaign> campaigns = Arrays.asList(campaign, campaign2);
+        List<Campaign> campaigns = Arrays.asList(campaign1, campaign2);
         when(repository.findAll()).thenReturn(campaigns);
         //when
         List<CampaignDto> result = campaignService.getCampaigns();
@@ -61,7 +60,7 @@ public class CampaignServiceTests {
     @Test
     void test_GetCampaign_CampaignReturned() {
         //given
-        when(repository.findById(existingId)).thenReturn(Optional.of(campaign));
+        when(repository.findById(existingId)).thenReturn(Optional.of(campaign1));
         //when
         CampaignDto newCampaignDto = campaignService.getCampaign(existingId);
         //then
@@ -72,7 +71,7 @@ public class CampaignServiceTests {
     void test_UpdateCampaign_CampaignUpdated() {
         //given
         CampaignDto campaignDto = new CampaignDto();
-        when(repository.findById(existingId)).thenReturn(Optional.of(campaign));
+        when(repository.findById(existingId)).thenReturn(Optional.of(campaign1));
         //when
         CampaignDto nerCampaignDto = campaignService.updateCampaign(existingId, campaignDto);
         //then
@@ -82,7 +81,7 @@ public class CampaignServiceTests {
     @Test
     void test_DeleteCampaign_CampaignDeleted() {
         //given
-        when(repository.findById(existingId)).thenReturn(Optional.ofNullable(campaign));
+        when(repository.findById(existingId)).thenReturn(Optional.ofNullable(campaign1));
         //when
         campaignService.deleteCampaign(existingId);
         //then
